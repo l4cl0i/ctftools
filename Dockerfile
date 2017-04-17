@@ -3,8 +3,8 @@ MAINTAINER lacloi <nguyenminhsang.uit@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 # Set the locale
-RUN apt-get clean && apt-get update
-RUN apt-get install locales
+RUN apt-get clean && apt-get update \
+ && apt-get install locales
 RUN locale-gen en_US.UTF-8 
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
@@ -102,9 +102,6 @@ RUN useradd -m -s /bin/bash ctf \
     && echo "ctf ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ctf \
     && echo "kernel.yama.ptrace_scope = 0" > /etc/sysctl.d/10-ptrace.conf, \
     && sysctl -p
-
-## clone my dotfiles
-##RUN git clone https://github.com/boogy/dotfiles.git /home/ctf/dotfiles
 
 ## Other python cool pip modules
 RUN pip2 install --upgrade pip \
