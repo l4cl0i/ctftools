@@ -209,7 +209,7 @@ RUN git clone https://github.com/keystone-engine/keystone.git /home/ctf/tools/ke
     && cd /home/ctf/tools/keystone/bindings/python \
     && make install
 RUN pip3 install psutil \
-	pyelftools \
+	pyelftools
 
 EXPOSE 22 1337 3002 3003 4000
 
