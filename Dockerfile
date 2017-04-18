@@ -3,18 +3,16 @@ MAINTAINER lacloi <nguyenminhsang.uit@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 # Set the locale
-RUN apt-get clean && apt-get update \
- && apt-get install locales
-RUN locale-gen en_US.UTF-8 
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8  
+RUN apt update && apt install -y locales && rm -rf /var/lib/apt/lists/* \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+ENV LANG en_US.utf8  
 
 RUN dpkg --add-architecture i386 \
-    && apt-get update \
-    && apt-get -yq install \
+    && apt update \
+    && apt -yq install \
     build-essential \
     python2.7 \
+	nano \
     python2.7-dev \
     python-dbg \
     python-imaging \
@@ -86,11 +84,15 @@ RUN dpkg --add-architecture i386 \
     qemu \
     qemu-user \
     qemu-user-static \
-	net-tools
+	net-tools \ 
+	iputils-ping
 
 ## super root password
 RUN /bin/echo -e "toor\ntoor"|passwd root
-
+## Resolve hostname
+RUN  /bin/echo -e "ubuntu" > /etc/hostname \
+	&&/bin/echo -e "\n127.0.0.1 ubuntu" >> /etc/hosts \
+	&& /etc/init.d/hostname.sh start
 ## setup a user
 RUN useradd -m -s /bin/bash ctf \
     && usermod -aG sudo ctf \
@@ -169,7 +171,7 @@ RUN pip2 install angr
 #     # && ./setup.sh -i -e angr
 
 ## Install rp++
-RUN apt-get install -yq clang-3.5 \
+RUN apt install -yq clang-3.5 \
     && export CC=/usr/bin/clang-3.5 \
     && export CXX=/usr/bin/clang++-3.5 \
     && cd /home/ctf/tools \
@@ -208,8 +210,14 @@ RUN git clone https://github.com/keystone-engine/keystone.git /home/ctf/tools/ke
     && ldconfig \
     && cd /home/ctf/tools/keystone/bindings/python \
     && make install
+## Update pip
+RUN pip install --upgrade pip
+## Install module for pwndbg
 RUN pip3 install psutil \
-	pyelftools \
+	pyelftools \ future 
+
+## Enable ssh service	
+RUN service ssh start
 
 EXPOSE 22 1337 3002 3003 4000
 
@@ -218,4 +226,3 @@ USER ctf
 WORKDIR /home/ctf
 
 CMD ["/bin/bash", "-i"]
-
