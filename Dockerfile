@@ -214,10 +214,14 @@ RUN git clone https://github.com/keystone-engine/keystone.git /home/ctf/tools/ke
 RUN pip install --upgrade pip
 ## Install module for pwndbg
 RUN pip3 install psutil \
+<<<<<<< HEAD
 	pyelftools \ future 
 
 ## Enable ssh service	
 RUN service ssh start
+=======
+	pyelftools
+>>>>>>> origin/master
 
 EXPOSE 22 1337 3002 3003 4000
 
