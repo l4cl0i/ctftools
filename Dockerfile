@@ -144,11 +144,6 @@ RUN git clone https://github.com/devttys0/binwalk /home/ctf/tools/binwalk \
     && cd /home/ctf/tools/binwalk \
     && python setup.py install
 
-## Uninstall capstone for python2
-#RUN pip2 uninstall capstone -y \
-#    && cd /home/ctf/tools/capstone/bindings/python \
-#    && python3 setup.py install
-
 ## Install american-fuzzy-lop
 RUN wget --quiet http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz -O /home/ctf/tools/afl-latest.tgz \
     && cd /home/ctf/tools/ \
@@ -157,18 +152,7 @@ RUN wget --quiet http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz -O /home
     && (cd afl-*;make;(cd llvm_mode;make);make install)
 
 ## Install angr
-#RUN git clone https://github.com/angr/angr-dev /home/ctf/tools/angr-dev \
-#    && cd /home/ctf/tools/angr-dev \
-#    && ./setup.sh -i -e angr
 RUN pip2 install angr
-
-# RUN git clone https://github.com/angr/angr-dev /home/ctf/tools/angr-dev \
-#     && cd /home/ctf/tools/angr-dev \
-#     && . /usr/local/bin/virtualenvwrapper.sh \
-#     && mkvirtualenv angr \
-#     && echo "I know this is a bad idea."|./setup.sh -i \
-#     && deactivate
-#     # && ./setup.sh -i -e angr
 
 ## Install rp++
 RUN apt install -yq clang-3.5 \
