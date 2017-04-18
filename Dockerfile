@@ -90,9 +90,9 @@ RUN dpkg --add-architecture i386 \
 ## super root password
 RUN /bin/echo -e "toor\ntoor"|passwd root
 ## Resolve hostname
-RUN  /bin/echo -e "ubuntu" > /etc/hostname \
-	&& /bin/echo -e "\n127.0.0.1 ubuntu" >> /etc/hosts \
-	&& /etc/init.d/hostname.sh start
+RUN  /bin/echo -e "ubuntu" > /etc/hostname 
+RUN  /bin/echo -e "\n127.0.0.1 ubuntu" >> /etc/hosts
+RUN  /etc/init.d/hostname.sh start
 ## setup a user
 RUN useradd -m -s /bin/bash ctf \
     && usermod -aG sudo ctf \
