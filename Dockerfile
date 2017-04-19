@@ -92,7 +92,6 @@ RUN /bin/echo -e "toor\ntoor"|passwd root
 ## Resolve hostname
 RUN  /bin/echo -e "ubuntu" > /etc/hostname 
 RUN  /bin/echo -e "\n127.0.0.1 ubuntu" >> /etc/hosts
-RUN  hostname ubuntu
 ## setup a user
 RUN useradd -m -s /bin/bash ctf \
     && usermod -aG sudo ctf \
