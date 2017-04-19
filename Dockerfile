@@ -199,8 +199,6 @@ RUN pip3 install psutil \
 	pyelftools \ 
 	future 
 
-## Enable ssh service	
-RUN service ssh start
 
 EXPOSE 22 1337 3002 3003 4000
 
